@@ -1,0 +1,48 @@
+{
+  "rows_total": 12541,
+  "rows_test": 2730,
+  "train_ids": [
+    "SUM_7",
+    "SUM_9",
+    "SUM_11",
+    "SUM_17"
+  ],
+  "test_ids": [
+    "SUM_18",
+    "SUM_21"
+  ],
+  "oof_pr_auc": 0.934,
+  "threshold": 0.237,
+  "heldout": {
+    "SUM_18": {
+      "pr_auc": 0.885,
+      "f1": 0.878
+    },
+    "SUM_21": {
+      "pr_auc": 0.919,
+      "f1": 0.844
+    }
+  },
+  "usage_days": {
+    "true": 10,
+    "predicted": 12,
+    "caught": 10
+  },
+  "real_days_verified": [
+    10,
+    10
+  ],
+  "stove_days_before_gate": 12,
+  "stove_days_after_gate": 12,
+  "gate": {
+    "peak": 305.0,
+    "dur_min": 12.91,
+    "flicker": 0.33
+  },
+  "payouts": {
+    "SUM_18": 0.009,
+    "SUM_21": 0.003
+  },
+  "holdback_days": 3,
+  "max_events_per_day": 2
+}

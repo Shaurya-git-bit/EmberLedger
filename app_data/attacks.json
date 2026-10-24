@@ -1,0 +1,67 @@
+{
+  "contract": [
+    {
+      "attack": "Claim the same day twice",
+      "what": "Submit a second credit for a day that was already issued.",
+      "blocked": true,
+      "reason": "day already issued"
+    },
+    {
+      "attack": "Replay an old event",
+      "what": "Reuse a real cooking trace to claim a new day.",
+      "blocked": true,
+      "reason": "duplicate event"
+    },
+    {
+      "attack": "Backfill with an old record",
+      "what": "Insert a day using an outdated data link.",
+      "blocked": true,
+      "reason": "chain broken"
+    },
+    {
+      "attack": "Claim 3 events in one day",
+      "what": "Submit more cooking events than the daily limit.",
+      "blocked": true,
+      "reason": "event cap"
+    },
+    {
+      "attack": "Forged signer",
+      "what": "Sign the day with a key that is not the stove's sensor.",
+      "blocked": true,
+      "reason": "bad sensor signature"
+    },
+    {
+      "attack": "Data edited after signing",
+      "what": "Change the readings after the sensor signed them.",
+      "blocked": true,
+      "reason": "bad sensor signature"
+    }
+  ],
+  "sensor": [
+    {
+      "attack": "kettle",
+      "tried": 60,
+      "got_through": 0
+    },
+    {
+      "attack": "lighter",
+      "tried": 60,
+      "got_through": 48
+    },
+    {
+      "attack": "heat_gun",
+      "tried": 60,
+      "got_through": 48
+    },
+    {
+      "attack": "synthetic",
+      "tried": 60,
+      "got_through": 60
+    },
+    {
+      "attack": "replay",
+      "tried": 60,
+      "got_through": 35
+    }
+  ]
+}
