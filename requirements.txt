@@ -1,0 +1,14 @@
+streamlit
+pandas
+numpy
+matplotlib
+shap
+joblib
+scikit-learn
+lightgbm
+web3
+eth-tester[py-evm]
+eth-account
+eth-abi
+eth-utils
+py-solc-x
