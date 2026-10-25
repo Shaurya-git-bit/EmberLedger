@@ -48,24 +48,40 @@ contract ProofOfUse {
         s.stake = msg.value;
     }
 
+        // Submit one stove-day to claim a credit
     function submitDay(Day calldata d, bytes32[] calldata eventHashes, bytes calldata sig) external {
+        // Only the official oracle account can submit days
         require(msg.sender == oracle, "oracle only");
+        // Look up the stove this day belongs to
         Stove storage s = stoves[d.id];
+        // The stove must be registered
         require(s.operator != address(0), "no stove");
+        // A day needs 1 or 2 cooking sessions, no more
         require(eventHashes.length > 0 && eventHashes.length <= MAX_EVENTS_PER_DAY, "event cap");
+        // The day must link to the stove's latest record, so history can't be rewritten
         require(d.prevHead == s.head, "chain broken");
-        // the sensor signed (stove, day, raw data hash, previous head): edited data or a forged signer fails here
+        // Rebuild the exact message the sensor signed: stove, day, data fingerprint, previous record
         bytes32 digest = keccak256(abi.encode(d.id, d.day, d.rawHash, d.prevHead));
+        // The signature must come from this stove's own sensor, so edited data or a fake signer fails
         require(_signer(digest, sig) == s.sensor, "bad sensor signature");
+        // Make a unique ID for this stove and day
         bytes32 key = keccak256(abi.encode(d.id, d.day));
+        // This stove-day must not have been credited before
         require(!issued[key], "day already issued");
+        // Mark the day as credited
         issued[key] = true;
+        // Check each cooking session in this day
         for (uint256 i; i < eventHashes.length; i++) {
+            // A cooking session can only be used once, ever
             require(!usedEvent[eventHashes[i]], "duplicate event");
+            // Mark this cooking session as used
             usedEvent[eventHashes[i]] = true;
         }
-        s.head = keccak256(abi.encodePacked(d.prevHead, d.rawHash));   // contract computes the new head
+        // Add this day to the stove's chain of records
+        s.head = keccak256(abi.encodePacked(d.prevHead, d.rawHash));
+        // Create the payment claim, which unlocks after the waiting period
         claims.push(Claim(d.id, uint64(block.timestamp + HOLDBACK), false));
+        // Announce the new credit on-chain
         emit DayIssued(d.id, d.day, claims.length - 1);
     }
 
