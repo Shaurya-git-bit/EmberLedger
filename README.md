@@ -2,9 +2,8 @@
 
 Cookstove carbon credits that are paid only for days a stove was really used, enforced by a smart contract.
 
-**Track:** Carbon Markets & Emissions Transparency
+# **Track:** Carbon Markets & Emissions Transparency
 **Hackathon:** ClimateChain Global Hackathon 2026
-**Demo video:** [add link]
 
 ## What this is
 
